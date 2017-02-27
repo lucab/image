@@ -7,7 +7,6 @@ import (
 
 	"github.com/docker/libtrust"
 	"github.com/opencontainers/go-digest"
-	imgspecv1 "github.com/opencontainers/image-spec/specs-go/v1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -21,8 +20,6 @@ func TestGuessMIMEType(t *testing.T) {
 		path     string
 		mimeType string
 	}{
-		{"ociv1.manifest.json", imgspecv1.MediaTypeImageManifest},
-		{"ociv1list.manifest.json", imgspecv1.MediaTypeImageManifestList},
 		{"v2s2.manifest.json", DockerV2Schema2MediaType},
 		{"v2list.manifest.json", DockerV2ListMediaType},
 		{"v2s1.manifest.json", DockerV2Schema1SignedMediaType},

@@ -239,6 +239,14 @@ func TestReferenceOCILayoutPath(t *testing.T) {
 	assert.Equal(t, tmpDir+"/oci-layout", ociRef.ociLayoutPath())
 }
 
+func TestReferenceIndexJSON(t *testing.T) {
+	ref, tmpDir := refToTempOCI(t)
+	defer os.RemoveAll(tmpDir)
+	ociRef, ok := ref.(ociReference)
+	require.True(t, ok)
+	assert.Equal(t, tmpDir+"/index.json", ociRef.indexPath())
+}
+
 func TestReferenceBlobPath(t *testing.T) {
 	const hex = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 
@@ -261,12 +269,4 @@ func TestReferenceBlobPathInvalid(t *testing.T) {
 	_, err := ociRef.blobPath(hex)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "unexpected digest reference "+hex)
-}
-
-func TestReferenceDescriptorPath(t *testing.T) {
-	ref, tmpDir := refToTempOCI(t)
-	defer os.RemoveAll(tmpDir)
-	ociRef, ok := ref.(ociReference)
-	require.True(t, ok)
-	assert.Equal(t, tmpDir+"/refs/notlatest", ociRef.descriptorPath("notlatest"))
 }
